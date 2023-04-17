@@ -10,7 +10,7 @@ run the following command on your terminal ,make sure you cd into the repo
 
 register your api and rest_framework in your setting.py  
 create a new branch  
->   `git checkout -b branchname`
->   `git add .`
->   `git commit -m "django project configuration setup"`
->   `git push -u origin branchname`
+>   `git checkout -b branchname`  
+>   `git add .`  
+>   `git commit -m "django project configuration setup"`  
+>   `git push -u origin branchname`  
