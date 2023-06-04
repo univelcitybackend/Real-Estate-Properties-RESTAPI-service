@@ -1,5 +1,6 @@
+from rest_framework import serializers
 from djoser.serializers import UserSerializer,UserCreateSerializer
-from .models import Agent
+from .models import Agent,Property
 
 
 class UserCreateSerializer(UserCreateSerializer):
@@ -12,3 +13,8 @@ class UserSerializer(UserSerializer):
     class Meta(UserSerializer):
         model=Agent
         fields = ['id', 'email', 'username', 'first_name', 'last_name']
+
+class PropertySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Property
+        fields = ['id', 'title', 'address', 'contact', 'owner']

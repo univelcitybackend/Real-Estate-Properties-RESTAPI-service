@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-from api.views import UserViewSet
+from api.views import UserViewSet, CreatePropertyView, UpdatePropertyView, DeletePropertyView
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -25,4 +25,8 @@ urlpatterns = [
     path('api/auth/', include('djoser.urls')),
     path('api/auth/', include('djoser.urls.authtoken')),
     path('api/', include(router.urls)),
+    path('properties/', CreatePropertyView.as_view(), name='create-property'),
+    path('properties/<int:pk>/', UpdatePropertyView.as_view(), name='update-property'),
+    path('properties/<int:pk>/delete/', DeletePropertyView.as_view(), name='delete-property')
 ]
+
