@@ -14,6 +14,7 @@ class Agent(AbstractUser):
 
 
 class Property(models.Model):
+    image = models.ImageField(verbose_name="Image", upload_to='property_images/')
     title = models.CharField(max_length=100)
     address = models.CharField(max_length=150)
     contact = models.CharField(max_length=20)
