@@ -17,4 +17,4 @@ class UserSerializer(UserSerializer):
 class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
-        fields = ['id', 'title', 'address', 'contact', 'owner']
+        fields = ['id', 'title', 'address', 'contact', 'owner', 'image']
