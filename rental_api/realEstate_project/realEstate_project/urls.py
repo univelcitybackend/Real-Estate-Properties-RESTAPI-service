@@ -16,6 +16,8 @@ Including another URLconf
 from django.urls import path, include
 from api.views import UserViewSet, CreatePropertyView, UpdatePropertyView, DeletePropertyView
 from rest_framework.routers import DefaultRouter
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register('user', UserViewSet, basename='user')
@@ -28,5 +30,6 @@ urlpatterns = [
     path('properties/', CreatePropertyView.as_view(), name='create-property'),
     path('properties/<int:pk>/', UpdatePropertyView.as_view(), name='update-property'),
     path('properties/<int:pk>/delete/', DeletePropertyView.as_view(), name='delete-property')
-]
+]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
