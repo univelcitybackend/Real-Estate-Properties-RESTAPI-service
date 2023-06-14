@@ -8,6 +8,15 @@ class UserCreateSerializer(UserCreateSerializer):
         model = Agent
         fields = ['username', 'first_name', 'last_name','email']
 
+class AgentNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agent
+        fields = ['first_name','last_name']
+
+class AgentDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Agent
+        fields = ['id','username' , 'first_name','last_name', 'email']
 
 class UserSerializer(UserSerializer):
     class Meta(UserSerializer):
@@ -17,4 +26,9 @@ class UserSerializer(UserSerializer):
 class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
-        fields = ['id', 'title', 'address', 'contact', 'owner']
+        fields = ['id', 'title', 'location', 'contact', 'owner' ,'image', 'price','property_type']
+
+class PropertyTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Property
+        fields = ['title']
