@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 # Create your models here.
 
 
@@ -21,3 +22,14 @@ class Property(models.Model):
     location = models.CharField(max_length=150)
     contact = models.CharField(max_length=20)
     owner = models.ForeignKey(Agent, on_delete=models.CASCADE)
+
+
+class Comment(models.Model):
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    customer_name = models.CharField(max_length=255)
+    comment_text = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.comment_text
+

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from djoser.serializers import UserSerializer,UserCreateSerializer
-from .models import Agent,Property
+from .models import Agent,Property, Comment
 
 
 class UserCreateSerializer(UserCreateSerializer):
@@ -32,3 +32,8 @@ class PropertyTitleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
         fields = ['title']
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['id', 'agent', 'customer_name', 'comment_text', 'created_at']

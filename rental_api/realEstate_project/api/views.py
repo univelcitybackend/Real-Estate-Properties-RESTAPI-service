@@ -7,7 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 
 # Create your views here.
 from djoser.views import UserViewSet as DjoserUserViewSet
-from .serializers import UserCreateSerializer, AgentNameSerializer,AgentDetailsSerializer
+from .serializers import UserCreateSerializer, AgentNameSerializer,AgentDetailsSerializer , CommentSerializer
 from .models import Agent, Property
 from .serializers import PropertySerializer,PropertyTitleSerializer
 
@@ -119,3 +119,5 @@ class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
     
 
+class AgentCommentView(generics.CreateAPIView):
+    serializer_class = CommentSerializer
