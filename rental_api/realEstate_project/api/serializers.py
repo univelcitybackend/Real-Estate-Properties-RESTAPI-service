@@ -26,6 +26,7 @@ class UserSerializer(UserSerializer):
 class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
+<<<<<<< HEAD
         fields = ['id', 'title', 'location', 'contact', 'owner' ,'image', 'price','property_type']
 
 class PropertyTitleSerializer(serializers.ModelSerializer):
@@ -37,3 +38,6 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['id', 'agent', 'customer_name', 'comment_text', 'created_at']
+=======
+        fields = ['id', 'title', 'address', 'contact', 'owner', 'image']
+>>>>>>> akin
