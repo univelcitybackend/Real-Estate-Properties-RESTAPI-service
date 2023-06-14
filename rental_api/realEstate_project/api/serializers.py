@@ -14,10 +14,20 @@ class UserSerializer(UserSerializer):
         model=Agent
         fields = ['id', 'email', 'username', 'first_name', 'last_name']
 
+class AgentDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agent
+        fields = ['id', 'email', 'username', 'first_name', 'last_name']
+
+class AgentNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agent
+        fields = ['first_name', 'last_name']
+
 class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
-        fields = ['id', 'title', 'address', 'contact', 'owner', 'image']
+        fields = ['id', 'title', 'location', 'contact', 'owner', 'image']
 
 
 class PropertyTitleSerializer(serializers.ModelSerializer):
