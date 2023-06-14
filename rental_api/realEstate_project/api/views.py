@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 # Create your views here.
 from djoser.views import UserViewSet as DjoserUserViewSet
-from .serializers import UserCreateSerializer
+from .serializers import UserCreateSerializer, PropertyTitleSerializer
 from .models import Agent, Property
 from .serializers import PropertySerializer
 
@@ -58,6 +58,16 @@ class DeletePropertyView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class PropertyListViewSet(ModelViewSet):
+    queryset = Property.objects.all()
+    serializer_class = PropertyTitleSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        titles = [property['title'] for property in serializer.data]
+        return Response(titles)
+    
 class PropertyViewSet(ModelViewSet):
     queryset = Property.objects.all()
     serializer_class = PropertySerializer
