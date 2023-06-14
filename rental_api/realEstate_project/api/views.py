@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 # Create your views here.
 from djoser.views import UserViewSet as DjoserUserViewSet
-from .serializers import UserCreateSerializer, PropertyTitleSerializer, AgentNameSerializer
+from .serializers import UserCreateSerializer, PropertyTitleSerializer, AgentNameSerializer,AgentDetailsSerializer
 from .models import Agent, Property
 from .serializers import PropertySerializer
 
@@ -62,6 +62,11 @@ class AgentNameViewSet(ModelViewSet):
     serializer_class = AgentNameSerializer
     permission_classes = [AllowAny]
 
+
+class AgentDetailsViewSet(ModelViewSet):
+    queryset = Agent.objects.all()
+    serializer_class = AgentDetailsSerializer
+    permission_classes = [AllowAny]
 
 class PropertyListViewSet(ModelViewSet):
     queryset = Property.objects.all()

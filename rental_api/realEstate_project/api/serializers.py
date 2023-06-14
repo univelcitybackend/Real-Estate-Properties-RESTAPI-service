@@ -14,6 +14,11 @@ class UserSerializer(UserSerializer):
         model=Agent
         fields = ['id', 'email', 'username', 'first_name', 'last_name']
 
+class AgentDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agent
+        fields = ['id', 'email', 'username', 'first_name', 'last_name']
+
 class AgentNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Agent
