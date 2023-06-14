@@ -71,7 +71,7 @@ class PropertyListViewSet(ModelViewSet):
 class PropertyViewSet(ModelViewSet):
     queryset = Property.objects.all()
     serializer_class = PropertySerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Property.objects.all()
