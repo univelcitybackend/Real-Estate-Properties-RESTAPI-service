@@ -1,18 +1,27 @@
 from django.shortcuts import render
-from rest_framework import status, viewsets
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import status, viewsets, generics
+from rest_framework.permissions import IsAuthenticated , AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.exceptions import ValidationError
 # Create your views here.
 from djoser.views import UserViewSet as DjoserUserViewSet
-from .serializers import UserCreateSerializer, PropertyTitleSerializer, AgentNameSerializer,AgentDetailsSerializer
+from .serializers import UserCreateSerializer, AgentNameSerializer,AgentDetailsSerializer , CommentSerializer , AgentRatingSerializer
+
 from .models import Agent, Property
-from .serializers import PropertySerializer
+from .serializers import PropertySerializer,PropertyTitleSerializer
 
 class UserViewSet(DjoserUserViewSet):
     queryset = Agent.objects.all()
     serializer_class = UserCreateSerializer
+
+class AgentPropertiesView(generics.ListAPIView):
+    serializer_class = PropertySerializer
+
+    def get_queryset(self):
+        agent_id = self.kwargs['agent_id']
+        return Property.objects.filter(id=agent_id)
 
 class CreatePropertyView(APIView):
     permission_classes = [IsAuthenticated]
@@ -57,6 +66,15 @@ class DeletePropertyView(APIView):
         property.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+
+
+class PropertyViewSet(ModelViewSet):
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+    permission_classes = [AllowAny]
+
+
 class AgentNameViewSet(ModelViewSet):
     queryset = Agent.objects.all()
     serializer_class = AgentNameSerializer
@@ -77,11 +95,17 @@ class PropertyListViewSet(ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         titles = [property['title'] for property in serializer.data]
         return Response(titles)
-    
-class PropertyViewSet(ModelViewSet):
-    queryset = Property.objects.all()
-    serializer_class = PropertySerializer
-    permission_classes = [IsAuthenticated]
+   
+class AgentNameViewSet(ModelViewSet):
+    queryset = Agent.objects.all()
+    serializer_class = AgentNameSerializer
+    permission_classes = [AllowAny]
+
+class AgentDetailsViewSet(ModelViewSet):
+    queryset = Agent.objects.all()
+    serializer_class = AgentDetailsSerializer
+    permission_classes = [AllowAny]
+
 
 class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Property.objects.all()
@@ -107,4 +131,29 @@ class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.filter(price__lte=max_price)
 
         return queryset
+    
+
+class AgentCommentView(generics.CreateAPIView):
+    serializer_class = CommentSerializer
+
+class AgentRatingCreateView(generics.CreateAPIView):
+    queryset = Agent.objects.all()
+    serializer_class = AgentRatingSerializer
+
+    def create(self, request, *args, **kwargs):
+        agent_id = self.kwargs['agent_id']
+        try:
+            agent = self.queryset.get(pk=agent_id)
+        except Agent.DoesNotExist:
+            raise ValidationError("Agent not found.")
+        
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        rating = serializer.validated_data['rating']
+
+        agent.rating = rating
+        agent.save()
+
+        return Response({'success': 'Rating saved successfully.'}, status=201)
+
 

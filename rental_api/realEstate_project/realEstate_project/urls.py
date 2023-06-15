@@ -14,25 +14,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-from api.views import UserViewSet, CreatePropertyView, UpdatePropertyView, DeletePropertyView, PropertyViewSet, PropertySearchViewSet, PropertyListViewSet, AgentNameViewSet, AgentDetailsViewSet
+from api.views import UserViewSet, CreatePropertyView, UpdatePropertyView, DeletePropertyView, PropertyViewSet, PropertySearchViewSet,PropertyListViewSet, AgentNameViewSet, AgentDetailsViewSet, AgentPropertiesView, AgentCommentView, AgentRatingCreateView
 from rest_framework.routers import DefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register('user', UserViewSet, basename='user')
+router.register(r'agent-details', AgentDetailsViewSet, basename='agent details')
 router.register(r'agents', AgentNameViewSet, basename='agents')
-router.register(r'agents-details', AgentDetailsViewSet, basename='agents-details')
-router.register(r'properties-list', PropertyListViewSet, basename='properties list')
+router.register(r'properties-list', PropertyListViewSet, basename='properties')
 router.register(r'properties', PropertyViewSet, basename='properties')
-router.register(r'properties-search', PropertySearchViewSet, basename='properties-search')
+router.register(r'properties-search',PropertySearchViewSet, basename='properties-search')
+
 
 urlpatterns = [
     # ...
     path('api/auth/', include('djoser.urls')),
+    path('api/agents/<int:agent_id>/properties/', AgentPropertiesView.as_view(), name='agent-properties'),
+    path('agents/<int:agent_id>/rate/', AgentRatingCreateView.as_view(), name='rate-agent'),
+    path('api/agents/<int:agent_id>/comments/', AgentCommentView.as_view(), name='agent-comments'),
     path('api/auth/', include('djoser.urls.authtoken')),
     path('api/', include(router.urls)),
-    path('properties/', CreatePropertyView.as_view(), name='create-property'),
+    path('properties/', CreatePropertyView.as_view(),  name='create-property'),
     path('properties/<int:pk>/', UpdatePropertyView.as_view(), name='update-property'),
     path('properties/<int:pk>/delete/', DeletePropertyView.as_view(), name='delete-property')
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

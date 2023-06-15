@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from djoser.serializers import UserSerializer,UserCreateSerializer
-from .models import Agent,Property
+from .models import Agent,Property, Comment
 
 
 class UserCreateSerializer(UserCreateSerializer):
@@ -8,6 +8,15 @@ class UserCreateSerializer(UserCreateSerializer):
         model = Agent
         fields = ['username', 'first_name', 'last_name','email']
 
+class AgentNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agent
+        fields = ['first_name','last_name']
+
+class AgentDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Agent
+        fields = ['id','username' , 'first_name','last_name', 'email']
 
 class UserSerializer(UserSerializer):
     class Meta(UserSerializer):
@@ -27,10 +36,19 @@ class AgentNameSerializer(serializers.ModelSerializer):
 class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
-        fields = ['id', 'title', 'location', 'contact', 'owner', 'image']
-
+        fields = ['id', 'title', 'location', 'contact', 'owner' ,'image', 'price','property_type']
 
 class PropertyTitleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
         fields = ['title']
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['id', 'agent', 'customer_name', 'comment_text', 'created_at']
+
+class AgentRatingSerializer(serializers.Serializer):
+    rating = serializers.IntegerField(min_value=1, max_value=5)
+        fields = ['title']
+
