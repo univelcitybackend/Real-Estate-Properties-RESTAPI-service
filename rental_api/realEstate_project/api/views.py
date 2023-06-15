@@ -8,6 +8,7 @@ from rest_framework.exceptions import ValidationError
 # Create your views here.
 from djoser.views import UserViewSet as DjoserUserViewSet
 from .serializers import UserCreateSerializer, AgentNameSerializer,AgentDetailsSerializer , CommentSerializer , AgentRatingSerializer
+
 from .models import Agent, Property
 from .serializers import PropertySerializer,PropertyTitleSerializer
 
@@ -67,11 +68,23 @@ class DeletePropertyView(APIView):
 
 
 
+
 class PropertyViewSet(ModelViewSet):
     queryset = Property.objects.all()
     serializer_class = PropertySerializer
     permission_classes = [AllowAny]
 
+
+class AgentNameViewSet(ModelViewSet):
+    queryset = Agent.objects.all()
+    serializer_class = AgentNameSerializer
+    permission_classes = [AllowAny]
+
+
+class AgentDetailsViewSet(ModelViewSet):
+    queryset = Agent.objects.all()
+    serializer_class = AgentDetailsSerializer
+    permission_classes = [AllowAny]
 
 class PropertyListViewSet(ModelViewSet):
     queryset = Property.objects.all()
@@ -82,7 +95,7 @@ class PropertyListViewSet(ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         titles = [property['title'] for property in serializer.data]
         return Response(titles)
-    
+   
 class AgentNameViewSet(ModelViewSet):
     queryset = Agent.objects.all()
     serializer_class = AgentNameSerializer
@@ -92,6 +105,7 @@ class AgentDetailsViewSet(ModelViewSet):
     queryset = Agent.objects.all()
     serializer_class = AgentDetailsSerializer
     permission_classes = [AllowAny]
+
 
 class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Property.objects.all()
@@ -141,4 +155,5 @@ class AgentRatingCreateView(generics.CreateAPIView):
         agent.save()
 
         return Response({'success': 'Rating saved successfully.'}, status=201)
+
 

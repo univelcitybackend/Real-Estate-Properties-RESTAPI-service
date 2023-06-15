@@ -27,6 +27,7 @@ router.register(r'properties-list', PropertyListViewSet, basename='properties')
 router.register(r'properties', PropertyViewSet, basename='properties')
 router.register(r'properties-search',PropertySearchViewSet, basename='properties-search')
 
+
 urlpatterns = [
     # ...
     path('api/auth/', include('djoser.urls')),

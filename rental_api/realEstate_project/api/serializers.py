@@ -23,6 +23,16 @@ class UserSerializer(UserSerializer):
         model=Agent
         fields = ['id', 'email', 'username', 'first_name', 'last_name']
 
+class AgentDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agent
+        fields = ['id', 'email', 'username', 'first_name', 'last_name']
+
+class AgentNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agent
+        fields = ['first_name', 'last_name']
+
 class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
@@ -40,3 +50,5 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class AgentRatingSerializer(serializers.Serializer):
     rating = serializers.IntegerField(min_value=1, max_value=5)
+        fields = ['title']
+
