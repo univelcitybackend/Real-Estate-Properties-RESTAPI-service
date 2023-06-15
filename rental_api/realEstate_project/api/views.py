@@ -1,4 +1,5 @@
 from django.shortcuts import render
+<<<<<<< HEAD
 from rest_framework import status, viewsets, generics
 from rest_framework.permissions import IsAuthenticated , AllowAny
 from rest_framework.response import Response
@@ -8,6 +9,16 @@ from rest_framework.exceptions import ValidationError
 # Create your views here.
 from djoser.views import UserViewSet as DjoserUserViewSet
 from .serializers import UserCreateSerializer, AgentNameSerializer,AgentDetailsSerializer , CommentSerializer , AgentRatingSerializer
+=======
+from rest_framework import status, viewsets
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+# Create your views here.
+from djoser.views import UserViewSet as DjoserUserViewSet
+from .serializers import UserCreateSerializer, PropertyTitleSerializer, AgentNameSerializer,AgentDetailsSerializer
+>>>>>>> c12415305d1be4ff6baec1dd1c20526c2c68b374
 from .models import Agent, Property
 from .serializers import PropertySerializer,PropertyTitleSerializer
 
@@ -65,6 +76,7 @@ class DeletePropertyView(APIView):
         property.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+<<<<<<< HEAD
 
 
 class PropertyViewSet(ModelViewSet):
@@ -73,6 +85,19 @@ class PropertyViewSet(ModelViewSet):
     permission_classes = [AllowAny]
 
 
+=======
+class AgentNameViewSet(ModelViewSet):
+    queryset = Agent.objects.all()
+    serializer_class = AgentNameSerializer
+    permission_classes = [AllowAny]
+
+
+class AgentDetailsViewSet(ModelViewSet):
+    queryset = Agent.objects.all()
+    serializer_class = AgentDetailsSerializer
+    permission_classes = [AllowAny]
+
+>>>>>>> c12415305d1be4ff6baec1dd1c20526c2c68b374
 class PropertyListViewSet(ModelViewSet):
     queryset = Property.objects.all()
     serializer_class = PropertyTitleSerializer
@@ -83,6 +108,7 @@ class PropertyListViewSet(ModelViewSet):
         titles = [property['title'] for property in serializer.data]
         return Response(titles)
     
+<<<<<<< HEAD
 class AgentNameViewSet(ModelViewSet):
     queryset = Agent.objects.all()
     serializer_class = AgentNameSerializer
@@ -92,6 +118,12 @@ class AgentDetailsViewSet(ModelViewSet):
     queryset = Agent.objects.all()
     serializer_class = AgentDetailsSerializer
     permission_classes = [AllowAny]
+=======
+class PropertyViewSet(ModelViewSet):
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+    permission_classes = [IsAuthenticated]
+>>>>>>> c12415305d1be4ff6baec1dd1c20526c2c68b374
 
 class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Property.objects.all()
@@ -117,6 +149,7 @@ class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.filter(price__lte=max_price)
 
         return queryset
+<<<<<<< HEAD
     
 
 class AgentCommentView(generics.CreateAPIView):
@@ -141,4 +174,6 @@ class AgentRatingCreateView(generics.CreateAPIView):
         agent.save()
 
         return Response({'success': 'Rating saved successfully.'}, status=201)
+=======
+>>>>>>> c12415305d1be4ff6baec1dd1c20526c2c68b374
 
