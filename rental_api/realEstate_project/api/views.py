@@ -4,10 +4,10 @@ from rest_framework.permissions import IsAuthenticated , AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-
+from rest_framework.exceptions import ValidationError
 # Create your views here.
 from djoser.views import UserViewSet as DjoserUserViewSet
-from .serializers import UserCreateSerializer, AgentNameSerializer,AgentDetailsSerializer , CommentSerializer
+from .serializers import UserCreateSerializer, AgentNameSerializer,AgentDetailsSerializer , CommentSerializer , AgentRatingSerializer
 from .models import Agent, Property
 from .serializers import PropertySerializer,PropertyTitleSerializer
 
@@ -121,3 +121,24 @@ class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
 
 class AgentCommentView(generics.CreateAPIView):
     serializer_class = CommentSerializer
+
+class AgentRatingCreateView(generics.CreateAPIView):
+    queryset = Agent.objects.all()
+    serializer_class = AgentRatingSerializer
+
+    def create(self, request, *args, **kwargs):
+        agent_id = self.kwargs['agent_id']
+        try:
+            agent = self.queryset.get(pk=agent_id)
+        except Agent.DoesNotExist:
+            raise ValidationError("Agent not found.")
+        
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        rating = serializer.validated_data['rating']
+
+        agent.rating = rating
+        agent.save()
+
+        return Response({'success': 'Rating saved successfully.'}, status=201)
+
