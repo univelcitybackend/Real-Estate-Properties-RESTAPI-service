@@ -8,7 +8,18 @@ from rest_framework.exceptions import ValidationError
 # Create your views here.
 from djoser.views import UserViewSet as DjoserUserViewSet
 from .serializers import UserCreateSerializer, AgentNameSerializer,AgentDetailsSerializer , CommentSerializer , AgentRatingSerializer
+<<<<<<< HEAD
+from rest_framework import status, viewsets
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+# Create your views here.
+from djoser.views import UserViewSet as DjoserUserViewSet
+from .serializers import UserCreateSerializer, PropertyTitleSerializer, AgentNameSerializer,AgentDetailsSerializer
+=======
 
+>>>>>>> 7bd0d1c5732176b0daab09b212f68e930a7af6c3
 from .models import Agent, Property
 from .serializers import PropertySerializer,PropertyTitleSerializer
 
@@ -21,7 +32,7 @@ class AgentPropertiesView(generics.ListAPIView):
 
     def get_queryset(self):
         agent_id = self.kwargs['agent_id']
-        return Property.objects.filter(id=agent_id)
+        return Property.objects.filter(owner=agent_id)
 
 class CreatePropertyView(APIView):
     permission_classes = [IsAuthenticated]
@@ -68,7 +79,10 @@ class DeletePropertyView(APIView):
 
 
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 7bd0d1c5732176b0daab09b212f68e930a7af6c3
 class PropertyViewSet(ModelViewSet):
     queryset = Property.objects.all()
     serializer_class = PropertySerializer
@@ -95,7 +109,11 @@ class PropertyListViewSet(ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         titles = [property['title'] for property in serializer.data]
         return Response(titles)
+<<<<<<< HEAD
+    
+=======
    
+>>>>>>> 7bd0d1c5732176b0daab09b212f68e930a7af6c3
 class AgentNameViewSet(ModelViewSet):
     queryset = Agent.objects.all()
     serializer_class = AgentNameSerializer
@@ -105,7 +123,14 @@ class AgentDetailsViewSet(ModelViewSet):
     queryset = Agent.objects.all()
     serializer_class = AgentDetailsSerializer
     permission_classes = [AllowAny]
+<<<<<<< HEAD
+class PropertyViewSet(ModelViewSet):
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+    permission_classes = [IsAuthenticated]
+=======
 
+>>>>>>> 7bd0d1c5732176b0daab09b212f68e930a7af6c3
 
 class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Property.objects.all()
@@ -117,8 +142,9 @@ class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
         # Retrieve the query parameters from the request
         location = self.request.query_params.get('location')
         property_type = self.request.query_params.get('property_type')
-        min_price = self.request.query_params.get('price')
-        max_price = self.request.query_params.get('price')
+        min_price = self.request.query_params.get('min_price')
+        max_price = self.request.query_params.get('max_price')
+
 
         # Apply filters based on query parameters
         if location:
@@ -134,8 +160,13 @@ class PropertySearchViewSet(viewsets.ReadOnlyModelViewSet):
     
 
 class AgentCommentView(generics.CreateAPIView):
+    queryset = Agent.objects.all()
     serializer_class = CommentSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(agent_id=self.kwargs['agent_id'])
+
+        
 class AgentRatingCreateView(generics.CreateAPIView):
     queryset = Agent.objects.all()
     serializer_class = AgentRatingSerializer
@@ -155,5 +186,8 @@ class AgentRatingCreateView(generics.CreateAPIView):
         agent.save()
 
         return Response({'success': 'Rating saved successfully.'}, status=201)
+<<<<<<< HEAD
+=======
 
+>>>>>>> 7bd0d1c5732176b0daab09b212f68e930a7af6c3
 

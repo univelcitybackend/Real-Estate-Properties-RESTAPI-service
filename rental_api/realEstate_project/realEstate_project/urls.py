@@ -21,12 +21,20 @@ from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register('user', UserViewSet, basename='user')
+<<<<<<< HEAD
+router.register(r'agents', AgentNameViewSet, basename='agents')
+router.register(r'agents-details', AgentDetailsViewSet, basename='agents-details')
+router.register(r'properties-list', PropertyListViewSet, basename='properties list')
+router.register(r'properties', PropertyViewSet, basename='properties')
+router.register(r'properties-search', PropertySearchViewSet, basename='properties-search')
+=======
 router.register(r'agent-details', AgentDetailsViewSet, basename='agent details')
 router.register(r'agents', AgentNameViewSet, basename='agents')
 router.register(r'properties-list', PropertyListViewSet, basename='properties')
 router.register(r'properties', PropertyViewSet, basename='properties')
 router.register(r'properties-search',PropertySearchViewSet, basename='properties-search')
 
+>>>>>>> 7bd0d1c5732176b0daab09b212f68e930a7af6c3
 
 urlpatterns = [
     # ...
