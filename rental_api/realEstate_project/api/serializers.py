@@ -37,7 +37,10 @@ class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
         fields = ['id', 'title', 'location', 'contact', 'owner' ,'image', 'price','property_type']
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7bd0d1c5732176b0daab09b212f68e930a7af6c3
 
 class PropertyTitleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,4 +55,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class AgentRatingSerializer(serializers.Serializer):
     rating = serializers.IntegerField(min_value=1, max_value=5)
+<<<<<<< HEAD
     fields = ['title']
+=======
+        fields = ['title']
+
+>>>>>>> 7bd0d1c5732176b0daab09b212f68e930a7af6c3
