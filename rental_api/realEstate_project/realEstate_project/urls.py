@@ -14,30 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-<<<<<<< HEAD
 from api.views import UserViewSet, CreatePropertyView, UpdatePropertyView, DeletePropertyView, PropertyViewSet, PropertySearchViewSet,PropertyListViewSet, AgentNameViewSet, AgentDetailsViewSet, AgentPropertiesView, AgentCommentView, AgentRatingCreateView
-=======
-from api.views import UserViewSet, CreatePropertyView, UpdatePropertyView, DeletePropertyView, PropertyViewSet, PropertySearchViewSet, PropertyListViewSet, AgentNameViewSet, AgentDetailsViewSet
->>>>>>> c12415305d1be4ff6baec1dd1c20526c2c68b374
 from rest_framework.routers import DefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register('user', UserViewSet, basename='user')
-<<<<<<< HEAD
-router.register(r'agent-details', AgentDetailsViewSet, basename='agent details')
-router.register(r'agents', AgentNameViewSet, basename='agents')
-router.register(r'properties-list', PropertyListViewSet, basename='properties')
-router.register(r'properties', PropertyViewSet, basename='properties')
-router.register(r'properties-search',PropertySearchViewSet, basename='properties-search')
-=======
 router.register(r'agents', AgentNameViewSet, basename='agents')
 router.register(r'agents-details', AgentDetailsViewSet, basename='agents-details')
 router.register(r'properties-list', PropertyListViewSet, basename='properties list')
 router.register(r'properties', PropertyViewSet, basename='properties')
 router.register(r'properties-search', PropertySearchViewSet, basename='properties-search')
->>>>>>> c12415305d1be4ff6baec1dd1c20526c2c68b374
 
 urlpatterns = [
     # ...

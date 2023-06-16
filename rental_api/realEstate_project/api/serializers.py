@@ -36,26 +36,20 @@ class AgentNameSerializer(serializers.ModelSerializer):
 class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
-<<<<<<< HEAD
         fields = ['id', 'title', 'location', 'contact', 'owner' ,'image', 'price','property_type']
-=======
-        fields = ['id', 'title', 'location', 'contact', 'owner', 'image']
 
->>>>>>> c12415305d1be4ff6baec1dd1c20526c2c68b374
 
 class PropertyTitleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
-<<<<<<< HEAD
         fields = ['title']
 
 class CommentSerializer(serializers.ModelSerializer):
+    agent_id= serializers.ReadOnlyField()
     class Meta:
         model = Comment
-        fields = ['id', 'agent', 'customer_name', 'comment_text', 'created_at']
+        fields = ['id', 'agent_id', 'customer_name', 'comment_text', 'created_at']
 
 class AgentRatingSerializer(serializers.Serializer):
     rating = serializers.IntegerField(min_value=1, max_value=5)
-=======
-        fields = ['title']
->>>>>>> c12415305d1be4ff6baec1dd1c20526c2c68b374
+    fields = ['title']
